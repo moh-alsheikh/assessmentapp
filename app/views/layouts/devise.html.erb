@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assessment App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>    
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>        
+</head>
+
+<body class="bg-gray-100 h-screen">
+
+    <header>
+      <%= render "shared/flash_notice" %>
+      <%= render "shared/navbar" %>
+    </header>
+
+    <div class="flex h-full items-center justify-center">
+        <%= yield %>
+    </div>
+
+</body>
+</html>

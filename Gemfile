@@ -76,3 +76,5 @@ end
 
 
 gem "tailwindcss-rails"
+
+gem 'devise', '~> 4.8'

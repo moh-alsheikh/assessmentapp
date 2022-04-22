@@ -1,0 +1,86 @@
+<div class="w-full">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <%= form_for(@quiz, class: "form") do |f| %>    
+      <div class="mb-4">  
+        <a href="<%= quizzes_path%>" class="font-medium px-10 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm">Back</a>
+        
+        <button type="submit" class="font-medium px-10 py-2 font-semibold text-sm bg-red-500 rounded-none shadow-sm" style= "background-color: #08a6e8 ; color: white " >Save</button>
+
+        <a href="" class="font-medium px-2 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm">+ New Question</a>
+        
+      </div>      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+        Name
+        </label>        
+        <%= f.text_field :name, class:"fshadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", required: "required", placeholder:"Name" %> 
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+        Description
+        </label>        
+        <%= f.text_area :description, class:"fshadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", required: "required", placeholder:"Description" %> 
+      </div>
+
+      <!----  Questions ---->
+      
+      <%= f.fields_for :questions do |question_subform| %>                         
+          <div class="flex items-center border-b border-teal-500 py-2 px-10 gap-10">            
+
+            <%= question_subform.text_field :question_text, class:"fshadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", required: "required", placeholder:"Name" %> 
+                      
+            <label class="md:w-2/6 block text-red-500 font-bold mb-3 px-1">   
+              <%= question_subform.check_box :_destroy, as: :boolean, label: '✗'%>
+              <span class="text-sm px-1">
+                Remove
+              </span>
+            </label>
+
+          </div>
+
+          <!----  Questions Options---->
+          <div class="w-full">
+
+              <% i = 0%>
+              <%= question_subform.fields_for :options do |option_subform| %>         
+
+                <div class="flex items-center border-b border-teal-500 py-2 px-20 gap-5">
+
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="question_option_text">
+                    <%= i+=1%>
+                  </label>  
+
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="question_option_text">
+                    Option
+                  </label>        
+                  <%= option_subform.text_field :question_option_text, class:"fshadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full max-w-sm", required: "required", placeholder:"Option" %> 
+
+                  
+                  <label class="md:w-2/3 block text-gray-500 font-bold">   
+                    <%= option_subform.check_box :is_correct, class:"mr-2 leading-tight", placeholder:"Correct answer" %> 
+                    <span class="text-sm">
+                      Correct
+                    </span>
+                  </label>
+
+
+                  <label class="md:w-2/3 block text-red-500 font-bold ">   
+                    <%= option_subform.check_box :_destroy, as: :boolean, label: '✗' %>
+                    <span class="text-sm px-1">
+                      Remove
+                    </span>
+                  </label>
+
+                </div>
+                
+              <%end%>
+                      
+
+          </div>          
+        
+        <%end%>
+
+      <%end%>
+    </div>
+    

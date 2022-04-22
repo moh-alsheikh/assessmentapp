@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      flash[:notice] = "User successfully created."  
       redirect_to @user
     else      
       render "new"
@@ -30,6 +31,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       # Don't ask current user to sign in again after password changed
       bypass_sign_in @user
+      flash[:notice] = "User successfully updated."  
       redirect_to @user
     else       
       render "edit"

@@ -10,9 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_21_045059) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_22_023717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "quiz_question_options", force: :cascade do |t|
+    t.bigint "quiz_question_id", null: false
+    t.string "question_option_text", null: false
+    t.boolean "is_correct", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_question_id"], name: "index_quiz_question_options_on_quiz_question_id"
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.text "question_text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
+  end
+
+  create_table "quiz_user_answers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "quiz_question_id", null: false
+    t.bigint "quiz_question_option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_question_id"], name: "index_quiz_user_answers_on_quiz_question_id"
+    t.index ["quiz_question_option_id"], name: "index_quiz_user_answers_on_quiz_question_option_id"
+    t.index ["user_id"], name: "index_quiz_user_answers_on_user_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
@@ -34,4 +69,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_21_045059) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "quiz_question_options", "quiz_questions"
+  add_foreign_key "quiz_questions", "quizzes"
+  add_foreign_key "quiz_user_answers", "quiz_question_options"
+  add_foreign_key "quiz_user_answers", "quiz_questions"
+  add_foreign_key "quiz_user_answers", "users"
 end

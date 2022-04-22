@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  quiz_question: one
+  quiz_question_option: one
+
+two:
+  user: two
+  quiz_question: two
+  quiz_question_option: two

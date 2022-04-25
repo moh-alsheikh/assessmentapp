@@ -5,13 +5,14 @@ assessment application up and running.
 
 * Ruby version 3.1.2
 
-* Rails version 7.0.2
+* Rails version 7.0.2 Hotwire
 
 * Frontend framework tailwindcss
 
 * System dependencies
   
   - devise
+  - redis
 
 * Configuration
 

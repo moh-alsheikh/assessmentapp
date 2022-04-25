@@ -1,0 +1,23 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to quiz"), quiz_path(@quiz) %>  
+
+  <%= turbo_frame_tag dom_id(@question, :edit) do %>
+  
+    <%= render "form", quiz: @quiz, question: @question %>
+  
+    <%= turbo_frame_tag nested_dom_id(@question, "options") do %>
+      <%= render @question.options, quiz: @quiz, question: @question %>
+      <div class="line-item-date__footer">
+        <%= link_to "Add option",
+                    [:new, @quiz, @question, :option],
+                    data: { turbo_frame: nested_dom_id(@question, Option.new) },
+                    class: "font-medium pt-3 px-3 py-2 font-semibold text-sm rounded shadow-sm", style: "background-color: gray ; color: white " %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag nested_dom_id(@question, Option.new) %>
+
+  <% end %>
+
+  
+</main>

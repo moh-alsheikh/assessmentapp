@@ -1,23 +1,30 @@
-<div class="mt-10 px-5 inline-grid grid-cols-3 gap-1">    
-    <a href="<%= users_path%>" class="font-medium px-10 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm text-center">Back</a>
-    <a href="<%= edit_user_path(@user)%>" class="font-medium px-10 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm text-center">Edit</a>    
-    
-    <% if @user.id != current_user.id%>      
-      <%= button_to "Delete", @user, form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete,class:"font-medium px-10 py-2 font-semibold text-sm rounded-none shadow-sm text-center", style: "background-color: #08a6e8 ; color: white " %>
-    <%end%>
+
+
+
+<div class="mt-1 lg:p-12 grid-cols-4 relative ">
+
+  <h1><%= @quiz.name %></h1>    
+
+  <br/>
+  <a href="<%= quizzes_path%>" class="font-medium px-10 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm">Back to quizzes</a>    
+  
+
+  <%= link_to "New Question",
+      new_quiz_question_path(@quiz),
+                  data: { turbo_frame: 'new_question' },
+                  class: "font-medium px-2 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm" %>
 
 </div>
 
-<br/>
-<br/>
 
-<span class="w-full mt-10 inline-grid grid-cols-2 gap-1 ">
-  <span class="text-lg text-black bg-gray-50 px-5">Name</span>
-  <span class="px-10 hover:bg-gray-50"><%= @user.name.capitalize%></span>
-  <span class="text-lg text-black bg-gray-50 px-5">Email</span>
-  <span class="px-10 hover:bg-gray-50"><%= @user.email%></span>
-  <span class="text-lg text-black bg-gray-50 px-5">Password</span>
-  <span class="px-10 hover:bg-gray-50">***************</span>
-  <span class="text-lg text-black bg-gray-50 px-5">Role</span>
-  <span class="px-10 hover:bg-gray-50"><%= @user.role.name%></span>
-</span>
+<div class="lg:p-12 grid grid-cols-1  gap-x-12 gap-y-4 relative z-20 ">
+
+  <%= turbo_frame_tag Question.new %>
+  
+  <%= turbo_frame_tag "questions" do %>
+    <%= render @questions, quiz: @quiz %>
+  <% end %>
+
+    
+    
+</div>

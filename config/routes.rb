@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :users   
   
   resources :quizzes do
-    resources :quiz_questions  do
-      resources :quiz_question_options
+    resources :questions  do
+      resources :options
     end
   end
   

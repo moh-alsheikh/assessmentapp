@@ -1,0 +1,28 @@
+
+<%= turbo_frame_tag option do %>
+
+  <table class="w-full lg:p-8 grid-cols-4 text-sm text-gray-500 dark:text-gray-400  text-left" style="table-layout: fixed; width: 50%; margin-left: 300px;">    
+    <tbody>  
+        <tr class="bg-white border-b dark:bg-gray-800">
+            <td class="py-4"><%= option.question_option_text %> </td>                                     
+            <td class="py-4"><%= option.is_correct == true ? '✅' : '❌' %> </td>                                     
+            <td class="py-4"><%= link_to "Edit",
+              [:edit, quiz, question, option],
+              class: "font-medium px-3 py-2 font-semibold text-sm rounded shadow-sm", style: "background-color: gray ; color: white "  %></td>                
+            <td class="py-4">
+              <%= button_to "Delete",
+                      [quiz, question, option],
+                      method: :delete, 
+                      form: { data: { turbo_confirm: "Are you sure?",  turbo_frame: "_top" } },
+                      class: "font-medium px-3 py-2 font-semibold text-sm rounded shadow-sm", style: "background-color: gray ; color: white " %>
+              
+              </td>        
+                
+
+        </tr>        
+    </tbody>  
+  </table>  
+
+  
+
+<% end %>

@@ -1,0 +1,48 @@
+
+<%= turbo_frame_tag question do %>
+  <%= turbo_frame_tag dom_id(question, :edit) do %>  
+    <table class="text-sm text-left text-gray-500 dark:text-gray-400 text-left" style=" width: 80%;">    
+        <tbody>  
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 bg-gray-50">
+                <td class="py-1">
+                  <%= question.question_text %>
+                  <br/>
+                  <br/>
+                  <%= link_to "Edit",
+                  [:edit, quiz, question], class: "font-medium  font-semibold text-sm rounded-none shadow-sm", style: "background-color: #08a6e8 ; color: white " %>
+                  <br/>
+                  <br/>
+                  <%= button_to "Delete",
+                  [quiz, question],
+                  method: :delete,
+                  form: { data: { turbo_confirm: "Are you sure?" } },
+                  class: "font-medium font-semibold text-sm rounded-none shadow-sm",
+                  style: "background-color: #08a6e8 ; color: white "
+                  %>
+                </td>                                     
+                <td class="py-2 text-left">
+                  
+                  
+                </td>                
+                <td class=" text-left">
+
+                  
+                </td>                
+                
+                              
+                  
+            </tr>        
+        </tbody>  
+    </table>  
+
+    <%= turbo_frame_tag nested_dom_id(question, "options") do %>
+      
+        <%= render question.options, quiz: quiz, question: question %>
+      
+    <% end %>
+    
+
+  <%end%> 
+
+<%end%> 
+

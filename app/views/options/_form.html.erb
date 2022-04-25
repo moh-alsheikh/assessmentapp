@@ -1,0 +1,28 @@
+<%= form_for [quiz, question, @option] do |f| %>
+    <%= form_error_notification(@option) %>  
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-6 ">    
+        <tbody>  
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+                <td class="px-6 py-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Option</label>                            
+                    <%= f.text_field :question_option_text, class:"fshadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full max-w-sm", required: "required", placeholder:"Option" %> 
+                </td>   
+                
+                <td class="px-6 py-4">
+                  <label class="md:w-2/3 block text-gray-500 font-bold">   
+                    <%= f.check_box :is_correct, class:"mr-2 leading-tight", placeholder:"Correct answer" %> 
+                    <span class="text-sm">
+                      Correct
+                    </span>
+                  </label>
+                </td>  
+                                
+                <td class="px-8 py-4">          
+                  <%= link_to "Cancel", quiz_path(quiz), class: "font-medium px-3 py-2 font-semibold text-sm bg-gray-100 rounded-none shadow-sm" %>                   
+                  <button type="submit" class="font-medium px-3 py-2 font-semibold text-sm bg-red-500 rounded-none shadow-sm" style= "background-color: #08a6e8 ; color: white " >Save</button>            
+                </td>
+
+            </tr>        
+        </tbody>
+    </table>  
+<%end%>

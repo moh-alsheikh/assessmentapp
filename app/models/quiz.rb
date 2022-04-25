@@ -1,19 +1,17 @@
 class Quiz < ApplicationRecord
   
-  has_many :questions, class_name: "QuizQuestion", dependent: :destroy
-  has_many :options, class_name: "QuizQuestionOption", through: :questions
+  has_many :questions, dependent: :destroy
+  has_many :options, through: :questions
 
   validates_presence_of :name, :description, message: "can't be blank"  
 
-  accepts_nested_attributes_for :questions, allow_destroy: true
+  broadcasts_to ->(quiz) { "quizzes" }, inserts_by: :prepend
 
+  scope :ordered, -> { order(created_at: :asc) }
   
+  def previous_date
+    where('created_at < ?', created_at).last
+  end
   
-end
 
-
-__END__
-
-Quiz.first.questions.each do |question|
-  puts "\n #{question.options.where(is_correct: true).count} \n"
 end

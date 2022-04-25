@@ -1,67 +1,67 @@
 class QuizzesController < ApplicationController
 
+  before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+
   def index
     @quizzes = Quiz.all.order(id: :asc)
   end
 
   def show
-    @quiz = Quiz.find(params[:id])
+    @quiz = Quiz.find(params[:id])    
+    @questions = @quiz.questions
   end
 
   def new
-    @quiz = Quiz.new(params[:quiz])
-    1.times do
-      @questions = @quiz.questions.build
-      3.times do
-        @questions.options.build    
-      end
-    end
+    @quiz = Quiz.new(params[:quiz])    
   end
 
   def edit
-    @quiz = Quiz.find(params[:id])
-    # 1.times do
-    #   @questions = @quiz.questions.build
-    #   3.times do
-    #     @questions.options.build    
-    #   end
-    # end
+    # @quiz = Quiz.find(params[:id])    
   end
 
   def create
     @quiz = Quiz.new(quiz_params)    
-    if @quiz.save!
-      flash[:notice] = "Quiz successfully created."     
-      redirect_to quizzes_path
+    if @quiz.save!      
+      respond_to do |format|
+        format.html { redirect_to quizzes_path, notice: "Quiz was successfully created." }
+        format.turbo_stream { flash.now[:notice] = "Quiz was successfully created." }
+      end
     else      
       flash[:error] = "Quiz not successfully created."      
-      redirect_to quizzes_path
+      render :new
     end
   end  
 
   def update
     @quiz = Quiz.find(params[:id])    
     if @quiz.update(quiz_params)
-      # Don't ask current quiz to sign in again after password changed 
-      flash[:notice] = "Quiz successfully updated."     
-      redirect_to quizzes_path
-    else 
+      respond_to do |format|
+        format.html { redirect_to quizzes_path, notice: "Quiz was successfully updated." }
+        format.turbo_stream { flash.now[:notice] = "Quiz was successfully updated." }
+      end     
+    else              
       flash[:error] = "Quiz not successfully updated."      
-      redirect_to quizzes_path
-    end    
+      render :new
+    end      
   end
  
-  def destroy
-    Quiz.find(params[:id]).destroy    
-    flash[:notice] = "Quiz successfully deleted."
-    redirect_to quizzes_path
+  def destroy            
+    Quiz.find(params[:id]).destroy
+    respond_to do |format|
+      format.html { redirect_to quiz_path(@quiz), notice: "Quiz was successfully deleted." }
+      format.turbo_stream { flash.now[:notice] = "Quiz was successfully deleted." }
+    end
   end
 
 
   private    
-    def quiz_params
-      # params.require(:quiz).permit(:name, :description, :question_attributes: [:question_text], option_attributes: [:question_option_text, :is_correct])
-      params.require(:quiz).permit!
+
+    def set_quiz
+      @quiz = Quiz.find(params[:id])
+    end
+
+    def quiz_params      
+      params.require(:quiz).permit(:name, :description)      
     end
 
 end

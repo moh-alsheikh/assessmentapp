@@ -1,0 +1,13 @@
+<%= turbo_frame_tag quiz do %>
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-6 text-center" style="table-layout: fixed;">    
+        <tbody>  
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+                <td class="py-4"><%= link_to quiz.name.capitalize, quiz_path(quiz), data: { turbo_frame: "_top" } %></td>                
+                <td class="py-4"><%= quiz.description%></td>                
+                <td class="py-4 font-medium px-3 py-2 font-semibold text-sm text-red-500 rounded"><%= link_to  quiz.questions.count, quiz_path(quiz), data: { turbo_frame: "_top" } %></td>                      
+                <td class="py-4"><%= link_to "Edit", edit_quiz_path(quiz), class: "font-medium px-3 py-2 font-semibold text-sm bg-red-500 rounded-none shadow-sm", style: "background-color: #08a6e8 ; color: white " %></td>                
+                <td class="py-4"><%= button_to "Delete", quiz_path(quiz), method: :delete, form: { data: { turbo_frame: "_top", turbo_confirm: "Are you sure?" } }, class: "font-medium px-3 py-2 font-semibold text-sm bg-red-500 rounded-none shadow-sm", style: "background-color: #08a6e8 ; color: white "%></td>                
+            </tr>        
+        </tbody>  
+    </table>  
+<%end%> 

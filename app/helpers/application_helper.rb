@@ -71,14 +71,23 @@ module ApplicationHelper
       end
     end
 
-    def link_to_add_fields(name, f, association)
-      new_object = f.object.send(association).klass.new
-      id = new_object.object_id
-      fields = f.fields_for(association, new_object, child_index: id) do |builder|
-          render(association.to_s.singularize + "_fields", f: builder)
-      end
-      link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+    def render_turbo_stream_flash_messages
+      turbo_stream.prepend "flash", partial: "shared/flash_notice"
     end
+
+    def nested_dom_id(*args)
+      args.map { |arg| arg.respond_to?(:to_key) ? dom_id(arg) : arg }.join("_")
+    end
+
+    def form_error_notification(object)
+      if object.errors.any?
+      tag.div class: "error-message" do
+          object.errors.full_messages.to_sentence.capitalize
+      end
+      end
+    end
+
+    
     
   end
   
